@@ -1,4 +1,4 @@
-class Conta(
+open class Conta(
     var titular: String,
     val banco: String,
     val numeroAgencia: Int,
@@ -6,9 +6,8 @@ class Conta(
     var digitoConta: Int
 ) {
     var saldo = 0.0
-        private set
-
-    fun sacar(valor: Double): Retorno {
+        protected set
+    open fun sacar(valor: Double): Retorno {
         val retorno = Retorno(true, "Saque realizado com sucesso da conta de ${this.titular}. Valor: $valor")
 
         if (valor <= 0) {
@@ -38,7 +37,7 @@ class Conta(
         return retorno
     }
 
-    fun transferir(contaDestino: Conta, valor: Double): Retorno {
+    open fun transferir(contaDestino: Conta, valor: Double): Retorno {
         val retorno =
             Retorno(true, "Transferência realizada. De: ${this.titular} para ${contaDestino.titular}. Valor: $valor")
         val ret = this.sacar(valor)
