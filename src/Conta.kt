@@ -34,7 +34,6 @@ class Conta(
             retorno.setMensagem("Informe um valor para o depósito")
             return retorno
         }
-
         this.saldo += valor
         return retorno
     }
