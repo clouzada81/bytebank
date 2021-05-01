@@ -1,10 +1,10 @@
 fun main() {
-    val funcionarioCris = criarAnalista(nome = "Cris Louzada", cpf = "000.000.000-00", salario = 3500.0)
-    val funcionarioRegis = criarAnalista(nome = "Regis Louzada", cpf = "333.333.333-33", salario = 2500.0)
-    val funcionarioBruna = criarGerente(nome = "Bruna Sevilha", cpf = "111.111.111-11", salario = 6000.0)
-    val funcionarioJoana = criarGerente(nome = "Joana Louzada", cpf = "444.444.444-44", salario = 5000.0)
-    val funcionarioBerlim = criarDiretor(nome = "Berlim", cpf = "222.222.222-22", salario = 11000.0)
-    val funcionarioFulano = criarDiretor(nome = "Fulano de Tal", cpf = "555.555.555-55", salario = 10000.0)
+    val funcionarioCris = criarAnalista("Cris Louzada", "000.000.000-00", 3500.0)
+    val funcionarioRegis = criarAnalista("Regis Louzada", "333.333.333-33", 2500.0)
+    val funcionarioBruna = criarGerente("Bruna Sevilha", "111.111.111-11", 6000.0, "bruna@2021")
+    val funcionarioJoana = criarGerente("Joana Louzada", "444.444.444-44", 5000.0, "joaninha")
+    val funcionarioBerlim = criarDiretor("Berlim", "222.222.222-22", 11000.0, "ze ruela")
+    val funcionarioFulano = criarDiretor("Fulano de Tal", "555.555.555-55", 10000.0, "beltrano")
 
     val contaCris = criarContaCorrente(funcionarioCris, "Banco Bradesco", 27, 226843, 4)
     val contaRegis = criarContaCorrente(funcionarioRegis, "Banco Bradesco", 28, 101010, 5)
@@ -13,9 +13,21 @@ fun main() {
     val contaBerlim = criarContaCorrente(funcionarioBerlim, "Banco Itaú", 29, 101112, 9)
     val contaFulano = criarContaPoupanca(funcionarioFulano, "Banco Santander", 30, 202122, 6)
 
-    movimentarContas(contaCris, contaBruna)
-    movimentarContas(contaRegis, contaJoana)
-    movimentarContas(contaBerlim, contaFulano)
+    val clienteZelda = Cliente(nome = "Zelda the Princess", login = "zelda", senha = "ocarina")
+    val clienteLink = Cliente(nome = "Link the Hero", login = "link", senha = "master_sword")
+
+    movimentarContas(origem = contaCris, destino = contaBruna)
+    movimentarContas(origem = contaRegis, destino = contaJoana)
+    movimentarContas(origem = contaBerlim, destino = contaFulano)
+
+    val areaRestrita = AreaRestrita()
+    areaRestrita.login(admin = funcionarioBruna, senha = "bruna@2021")
+    areaRestrita.login(admin = funcionarioJoana, senha = "joaninha")
+    areaRestrita.login(admin = funcionarioBerlim, senha = "ze ruela")
+    areaRestrita.login(admin = funcionarioFulano, senha = "beltrano")
+    areaRestrita.login(admin = clienteZelda, senha = "ocarina")
+    areaRestrita.login(admin = clienteLink, senha = "master_sword")
+
 }
 
 private fun movimentarContas(origem: Conta, destino: Conta) {
@@ -38,7 +50,7 @@ private fun movimentarContas(origem: Conta, destino: Conta) {
 }
 
 private fun criarAnalista(nome: String, cpf: String, salario: Double): Funcionario {
-    val funcionario = Analista(nome, cpf, salario)
+    val funcionario = Analista(nome = nome, cpf = cpf, salario = salario)
     println("Bem vindo novo funcionário: ${funcionario.nome}")
     println("Salário base: ${funcionario.salario}")
     println("Bonificação: ${funcionario.bonificacao()}")
@@ -47,8 +59,8 @@ private fun criarAnalista(nome: String, cpf: String, salario: Double): Funcionar
     return funcionario
 }
 
-private fun criarGerente(nome: String, cpf: String, salario: Double): Funcionario {
-    val funcionario = Gerente(nome, cpf, salario)
+private fun criarGerente(nome: String, cpf: String, salario: Double, senha: String): FuncionarioAdmin {
+    val funcionario = Gerente(nome = nome, cpf = cpf, salario = salario, senha = senha)
     println("Bem vindo novo funcionário: ${funcionario.nome}")
     println("Salário base: ${funcionario.salario}")
     println("Bonificação: ${funcionario.bonificacao()}")
@@ -57,8 +69,8 @@ private fun criarGerente(nome: String, cpf: String, salario: Double): Funcionari
     return funcionario
 }
 
-private fun criarDiretor(nome: String, cpf: String, salario: Double): Funcionario {
-    val funcionario = Diretor(nome, cpf, salario, 300.0)
+private fun criarDiretor(nome: String, cpf: String, salario: Double, senha: String): FuncionarioAdmin {
+    val funcionario = Diretor(nome = nome, cpf = cpf, salario = salario, senha = senha, plr = 300.0)
     println("Bem vindo novo funcionário: ${funcionario.nome}")
     println("Salário base: ${funcionario.salario}")
     println("Bonificação: ${funcionario.bonificacao()}")
@@ -69,7 +81,9 @@ private fun criarDiretor(nome: String, cpf: String, salario: Double): Funcionari
 
 
 private fun criarContaCorrente(titular: Funcionario, banco: String, agencia: Int, conta: Int, digito: Int): Conta {
-    val contaCorrente = ContaCorrente(titular, banco, agencia, conta, digito)
+    val contaCorrente = ContaCorrente(titular = titular,
+        banco = banco, numeroAgencia = agencia, numeroConta = conta, digitoConta = digito)
+
     println("Bem vindo ao Bytebank ${contaCorrente.titular.nome}")
     println("Sua conta foi criada: ${contaCorrente.banco} (${contaCorrente.numeroAgencia} / ${contaCorrente.numeroConta}-${contaCorrente.digitoConta})")
     println("Saldo inicial da conta de ${contaCorrente.titular.nome}: ${contaCorrente.saldo}")
@@ -78,7 +92,8 @@ private fun criarContaCorrente(titular: Funcionario, banco: String, agencia: Int
 }
 
 private fun criarContaPoupanca(titular: Funcionario, banco: String, agencia: Int, conta: Int, digito: Int): Conta {
-    val contaPoupanca = ContaPoupanca(titular, banco, agencia, conta, digito)
+    val contaPoupanca = ContaPoupanca(titular = titular,
+        banco = banco, numeroAgencia = agencia, numeroConta = conta, digitoConta = digito)
     println("Bem vindo ao Bytebank ${contaPoupanca.titular.nome}")
     println("Sua conta foi criada: ${contaPoupanca.banco} (${contaPoupanca.numeroAgencia} / ${contaPoupanca.numeroConta}-${contaPoupanca.digitoConta})")
     println("Saldo inicial da conta de ${contaPoupanca.titular.nome}: ${contaPoupanca.saldo}")
