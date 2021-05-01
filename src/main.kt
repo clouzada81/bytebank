@@ -28,6 +28,7 @@ fun main() {
     areaRestrita.login(admin = clienteZelda, senha = "ocarina")
     areaRestrita.login(admin = clienteLink, senha = "master_sword")
 
+    println("Obrigado por utilizar o Bytebank")
 }
 
 private fun movimentarContas(origem: Conta, destino: Conta) {
