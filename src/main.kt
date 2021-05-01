@@ -12,6 +12,7 @@ fun main() {
     val contaJoana = criarContaPoupanca(funcionarioJoana, "Caixa Econômica Federal", 11, 102040, 7)
     val contaBerlim = criarContaCorrente(funcionarioBerlim, "Banco Itaú", 29, 101112, 9)
     val contaFulano = criarContaPoupanca(funcionarioFulano, "Banco Santander", 30, 202122, 6)
+
     movimentarContas(contaCris, contaBruna)
     movimentarContas(contaRegis, contaJoana)
     movimentarContas(contaBerlim, contaFulano)

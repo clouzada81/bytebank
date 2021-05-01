@@ -3,7 +3,6 @@ abstract class Funcionario(
     val cpf: String,
     val salario: Double
 ) {
-
     abstract fun bonificacao(): Double
     abstract fun salarioLiquido(): Double
 }

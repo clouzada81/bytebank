@@ -25,7 +25,6 @@ abstract class Conta(
         if (valor <= 0) {
             return "Informe um valor maior do que zero"
         }
-
         this.saldo += valor
         return "Depósito realizado com sucesso na conta de ${this.titular.nome}. Valor: $valor"
     }

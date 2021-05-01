@@ -2,7 +2,7 @@ class Diretor(
     nome: String,
     cpf: String,
     salario: Double,
-    var plr: Double
+    private var plr: Double
 ) : Funcionario(
     nome = nome,
     cpf = cpf,
