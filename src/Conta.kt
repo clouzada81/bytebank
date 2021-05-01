@@ -1,57 +1,54 @@
-class Conta(
-    var titular: String,
+abstract class Conta(
+    var titular: Funcionario,
     val banco: String,
     val numeroAgencia: Int,
     val numeroConta: Int,
-    var digitoConta: Int
+    var digitoConta: Int,
 ) {
     var saldo = 0.0
-        private set
+        protected set
 
-    fun sacar(valor: Double): Retorno {
-        val retorno = Retorno(true, "Saque realizado com sucesso da conta de ${this.titular}. Valor: $valor")
-
+    fun sacar(valor: Double): String {
         if (valor <= 0) {
-            retorno.setStatus(false)
-            retorno.setMensagem("Informe um valor para o saque")
-            return retorno
+            return "Saque não realizado da conta de ${this.titular.nome}. Valor: $valor.\nMotivo: Informe um valor maior do que zero"
         }
 
         if (this.saldo < valor) {
-            retorno.setStatus(false)
-            retorno.setMensagem("Saque não realizado da conta de ${this.titular}. Valor: $valor. Saldo insuficiente")
-            return retorno
+            return "Saque não realizado da conta de ${this.titular.nome}. Valor: $valor.\nMotivo: Saldo insuficiente"
         }
 
-        this.saldo -= valor
-        return retorno
+        doSacar(valor)
+        return "Saque realizado com sucesso da conta de ${this.titular.nome}. Valor: $valor"
     }
 
-    fun depositar(valor: Double): Retorno {
-        val retorno = Retorno(true, "Depósito realizado com sucesso na conta de ${this.titular}. Valor: $valor")
+    fun depositar(valor: Double): String {
         if (valor <= 0) {
-            retorno.setStatus(false)
-            retorno.setMensagem("Informe um valor para o depósito")
-            return retorno
+            return "Informe um valor maior do que zero"
         }
 
         this.saldo += valor
-        return retorno
+        return "Depósito realizado com sucesso na conta de ${this.titular.nome}. Valor: $valor"
     }
 
-    fun transferir(contaDestino: Conta, valor: Double): Retorno {
-        val retorno =
-            Retorno(true, "Transferência realizada. De: ${this.titular} para ${contaDestino.titular}. Valor: $valor")
-        val ret = this.sacar(valor)
-        if (!ret.getStatus()) {
-            retorno.setStatus(false)
-            retorno.setMensagem(
-                "Transferência não realizada da conta de ${this.titular} para ${contaDestino.titular}. Valor: $valor. Saldo insuficiente na conta de ${this.titular}"
-            )
-            return retorno
+    fun transferir(contaDestino: Conta, valor: Double): String {
+        if (valor <= 0) {
+            return "Transferência não realizada da conta de ${this.titular.nome} para ${contaDestino.titular.nome}. Valor: $valor.\nMotivo: Informe um valor maior do que zero"
         }
 
-        contaDestino.depositar(valor)
-        return retorno
+        if (this.saldo < valor) {
+            return "Transferência não realizada da conta de ${this.titular.nome} para ${contaDestino.titular.nome}. Valor: $valor.\nMotivo: Saldo insuficiente na conta de ${this.titular.nome}"
+        }
+
+        doTransferir(contaDestino, valor)
+        return "Transferência realizada. De: ${this.titular.nome} para ${contaDestino.titular.nome}. Valor: $valor"
     }
+
+    fun receber(): String {
+        this.saldo += this.titular.salarioLiquido()
+        return "Pagamento caiu na conta de ${this.titular.nome}. Valor: ${this.titular.salarioLiquido()}"
+    }
+
+    abstract fun render(): String
+    abstract fun doSacar(valor: Double)
+    abstract fun doTransferir(contaDestino: Conta, valor: Double)
 }

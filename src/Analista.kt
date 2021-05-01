@@ -1,4 +1,4 @@
-class Gerente(
+class Analista(
     nome: String,
     cpf: String,
     salario: Double,
@@ -7,9 +7,8 @@ class Gerente(
     cpf = cpf,
     salario = salario
 ) {
-
     override fun bonificacao(): Double {
-        return salario * 0.2
+        return this.salario * 0.1
     }
 
     override fun salarioLiquido(): Double {
