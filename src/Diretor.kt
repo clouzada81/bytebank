@@ -2,11 +2,13 @@ class Diretor(
     nome: String,
     cpf: String,
     salario: Double,
+    senha: String,
     private var plr: Double
-) : Funcionario(
+) : FuncionarioAdmin(
     nome = nome,
     cpf = cpf,
-    salario = salario
+    salario = salario,
+    senha = senha
 ) {
 
     override fun bonificacao(): Double {

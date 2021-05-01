@@ -2,10 +2,12 @@ class Gerente(
     nome: String,
     cpf: String,
     salario: Double,
-) : Funcionario(
+    senha: String
+) : FuncionarioAdmin(
     nome = nome,
     cpf = cpf,
-    salario = salario
+    salario = salario,
+    senha = senha
 ) {
 
     override fun bonificacao(): Double {
