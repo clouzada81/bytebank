@@ -1,10 +1,10 @@
 class AreaRestrita {
 
-    fun login(admin: FuncionarioAdmin, senha: String) {
+    fun login(admin: Autenticavel, senha: String) {
         if (admin.autenticar(senha)) {
-            println("Usuário ${admin.nome} autenticado com sucesso!")
+            println("Usuário autenticado com sucesso!")
         } else {
-            println("Acesso do usuario ${admin.nome} negado! Senha incorreta: $senha")
+            println("Acesso do usuário negado! Senha incorreta: $senha")
         }
     }
 }

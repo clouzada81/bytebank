@@ -13,6 +13,9 @@ fun main() {
     val contaBerlim = criarContaCorrente(funcionarioBerlim, "Banco Itaú", 29, 101112, 9)
     val contaFulano = criarContaPoupanca(funcionarioFulano, "Banco Santander", 30, 202122, 6)
 
+    val clienteZelda = Cliente(nome = "Zelda the Princess", login = "zelda", senha = "ocarina")
+    val clienteLink = Cliente(nome = "Link the Hero", login = "link", senha = "master_sword")
+
     movimentarContas(origem = contaCris, destino = contaBruna)
     movimentarContas(origem = contaRegis, destino = contaJoana)
     movimentarContas(origem = contaBerlim, destino = contaFulano)
@@ -21,7 +24,9 @@ fun main() {
     areaRestrita.login(admin = funcionarioBruna, senha = "bruna@2021")
     areaRestrita.login(admin = funcionarioJoana, senha = "joaninha")
     areaRestrita.login(admin = funcionarioBerlim, senha = "ze ruela")
-    areaRestrita.login(admin = funcionarioFulano, senha = "jaspion")
+    areaRestrita.login(admin = funcionarioFulano, senha = "beltrano")
+    areaRestrita.login(admin = clienteZelda, senha = "ocarina")
+    areaRestrita.login(admin = clienteLink, senha = "master_sword")
 
 }
 
